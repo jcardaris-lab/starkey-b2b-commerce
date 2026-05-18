@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starkey × Salesforce B2B Commerce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ──────────────────────────────────────────────────── */
+:root{
+  --cyan:    #0891B2;
+  --cyan-d:  #0E7490;
+  --cyan-l:  #CFFAFE;
+  --cyan-xl: #ECFEFF;
+  --green:   #059669;
+  --green-l: #D1FAE5;
+  --orange:  #EA580C;
+  --orange-l:#FFF7ED;
+  --navy:    #0F172A;
+  --slate:   #1E293B;
+  --muted:   #64748B;
+  --border:  #E2E8F0;
+  --bg:      #F8FAFC;
+  --white:   #FFFFFF;
+  --card:    #FFFFFF;
+  --shadow:  0 1px 3px rgba(15,23,42,.06), 0 4px 16px rgba(15,23,42,.08);
+  --shadow-lg:0 8px 32px rgba(15,23,42,.12), 0 2px 8px rgba(15,23,42,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--slate);background:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.6}
+
+/* ── UTILS ───────────────────────────────────────────────────── */
+.wrap{max-width:1200px;margin:0 auto;padding:0 40px}
+@media(max-width:640px){.wrap{padding:0 20px}}
+
+/* ── NAV ─────────────────────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  height:64px;display:flex;align-items:center;padding:0 40px;
+}
+.nav-inner{max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;gap:32px}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nav-brand-badge{
+  font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--cyan);background:var(--cyan-xl);border:1px solid var(--cyan-l);
+  padding:3px 10px;border-radius:20px;
+}
+.nav-links{display:flex;gap:4px;flex:1}
+.nav-links a{
+  color:var(--muted);font-size:13px;font-weight:500;text-decoration:none;
+  padding:6px 12px;border-radius:8px;transition:color .15s,background .15s;
+}
+.nav-links a:hover{color:var(--slate);background:var(--bg)}
+.nav-cta{
+  background:var(--cyan);color:var(--white);
+  font-size:13px;font-weight:600;padding:9px 20px;
+  border-radius:24px;text-decoration:none;white-space:nowrap;
+  transition:background .15s,transform .15s;flex-shrink:0;
+}
+.nav-cta:hover{background:var(--cyan-d);transform:translateY(-1px)}
+@media(max-width:900px){
+  .nav-links{display:none}
+  nav{padding:0 20px}
+}
+
+/* ── HERO ────────────────────────────────────────────────────── */
+.hero{
+  display:grid;grid-template-columns:55% 45%;
+  min-height:calc(100vh - 64px);
+  background:var(--navy);
+  position:relative;overflow:hidden;
+}
+.hero-left{
+  padding:88px 64px 88px 80px;
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;z-index:2;
+}
+.hero-right{position:relative;overflow:hidden}
+.hero-img{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=900&q=85&auto=format&fit=crop&crop=focalpoint&fp-x=.5&fp-y=.4');
+  background-size:cover;background-position:center;
+}
+.hero-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right, var(--navy) 0%, rgba(15,23,42,.55) 40%, rgba(15,23,42,.1) 100%);
+}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .hero-left{padding:64px 20px}
+}
+
+/* hero copy */
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(8,145,178,.15);border:1px solid rgba(8,145,178,.35);
+  color:#67E8F9;font-size:11px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;padding:6px 14px;border-radius:24px;
+  margin-bottom:28px;width:fit-content;
+}
+.hero-eyebrow-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#04E1CB;box-shadow:0 0 0 3px rgba(4,225,203,.25);
+}
+.hero h1{
+  font-family:'Figtree',sans-serif;
+  font-size:clamp(38px,4.5vw,64px);font-weight:800;color:var(--white);
+  line-height:1.05;letter-spacing:-.5px;margin-bottom:24px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,#04E1CB,#0891B2);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-sub{
+  font-size:17px;font-weight:400;color:rgba(255,255,255,.72);
+  line-height:1.7;margin-bottom:40px;max-width:480px;
+}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:44px}
+.hero-chip{
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.85);font-size:11px;font-weight:600;letter-spacing:.3px;
+  padding:6px 14px;border-radius:20px;
+}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px}
+.btn-hero-primary{
+  background:var(--cyan);color:var(--white);
+  font-size:15px;font-weight:700;padding:14px 30px;
+  border-radius:32px;text-decoration:none;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:background .15s,transform .15s;
+}
+.btn-hero-primary:hover{background:var(--cyan-d);transform:translateY(-2px)}
+.btn-hero-outline{
+  background:transparent;color:var(--white);
+  font-size:15px;font-weight:500;padding:14px 30px;
+  border-radius:32px;text-decoration:none;
+  border:1.5px solid rgba(255,255,255,.25);
+  display:inline-flex;align-items:center;gap:8px;
+  transition:border-color .15s,background .15s;
+}
+.btn-hero-outline:hover{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.05)}
+
+/* hero trust strip */
+.hero-trust{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  padding-top:32px;border-top:1px solid rgba(255,255,255,.1);
+}
+.hero-trust-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:12px;font-weight:600;color:rgba(255,255,255,.55);
+}
+.hero-trust-icon{
+  width:18px;height:18px;flex-shrink:0;
+}
+
+/* ── SOCIAL PROOF BAND ───────────────────────────────────────── */
+.proof-band{
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:24px 40px;
+}
+.proof-band-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;
+}
+.proof-label{
+  font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;flex-shrink:0;
+}
+.proof-stats{display:flex;align-items:center;gap:48px;flex-wrap:wrap}
+.proof-stat-item{text-align:center}
+.proof-stat-num{
+  font-family:'Figtree',sans-serif;font-size:22px;font-weight:800;color:var(--slate);
+  display:block;line-height:1;
+}
+.proof-stat-lbl{font-size:11px;color:var(--muted);font-weight:500;margin-top:3px}
+.proof-divider{width:1px;height:36px;background:var(--border);flex-shrink:0}
+@media(max-width:700px){.proof-band{padding:20px};.proof-divider{display:none}}
+
+/* ── SECTION SHARED ──────────────────────────────────────────── */
+section.content{padding:96px 40px}
+@media(max-width:640px){section.content{padding:64px 20px}}
+
+.s-label{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:14px;
+}
+.s-label::before{
+  content:'';width:28px;height:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--green));
+  border-radius:2px;flex-shrink:0;
+}
+.s-title{
+  font-family:'Figtree',sans-serif;
+  font-size:clamp(28px,3vw,44px);font-weight:800;
+  color:var(--slate);line-height:1.12;letter-spacing:-.3px;margin-bottom:16px;
+}
+.s-title em{font-style:normal;color:var(--cyan)}
+.s-sub{
+  font-size:17px;font-weight:400;color:var(--muted);
+  line-height:1.7;max-width:600px;margin-bottom:56px;
+}
+
+/* ── CHALLENGES ──────────────────────────────────────────────── */
+#challenges{background:var(--bg)}
+.challenges-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:16px;
+}
+.c-card{
+  background:var(--white);border-radius:16px;padding:32px 28px;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s;
+  position:relative;overflow:hidden;
+}
+.c-card::before{
+  content:'';position:absolute;inset:0 0 auto 0;
+  height:3px;border-radius:16px 16px 0 0;
+}
+.c-card.cyan::before{background:var(--cyan)}
+.c-card.green::before{background:var(--green)}
+.c-card.orange::before{background:var(--orange)}
+.c-card.indigo::before{background:#6366F1}
+.c-card.violet::before{background:#7C3AED}
+.c-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.c-num{
+  font-family:'Figtree',sans-serif;
+  font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;
+}
+.c-card h4{
+  font-family:'Figtree',sans-serif;
+  font-size:17px;font-weight:700;color:var(--slate);margin-bottom:10px;
+}
+.c-card p{font-size:14px;color:var(--muted);line-height:1.7}
+.c-impact{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:18px;font-size:12px;font-weight:700;
+  padding:6px 12px;border-radius:8px;
+}
+.c-impact.cyan{background:var(--cyan-xl);color:var(--cyan-d)}
+.c-impact.green{background:var(--green-l);color:#065F46}
+.c-impact.orange{background:var(--orange-l);color:#C2410C}
+.c-impact.indigo{background:#EEF2FF;color:#4338CA}
+.c-impact.violet{background:#F5F3FF;color:#5B21B6}
+
+/* ── SOLUTION ────────────────────────────────────────────────── */
+#solution{background:var(--white)}
+.sol-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:20px;
+}
+.sol-card{
+  border-radius:16px;padding:32px 28px;
+  border:1px solid var(--border);
+  background:var(--white);
+  box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+  display:flex;flex-direction:column;
+}
+.sol-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--cyan-l)}
+.sol-icon{
+  width:44px;height:44px;border-radius:12px;
+  background:var(--cyan-xl);border:1px solid var(--cyan-l);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;
+}
+.sol-tag{
+  font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:10px;
+}
+.sol-card h4{
+  font-family:'Figtree',sans-serif;
+  font-size:17px;font-weight:700;color:var(--slate);margin-bottom:10px;
+}
+.sol-card p{font-size:14px;color:var(--muted);line-height:1.7;flex:1}
+.sol-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:18px;background:var(--bg);border:1px solid var(--border);
+  color:var(--muted);font-size:11px;font-weight:600;
+  padding:5px 12px;border-radius:20px;width:fit-content;
+}
+
+/* ── BUYERS ──────────────────────────────────────────────────── */
+#buyers{background:var(--navy)}
+#buyers .s-label{color:#67E8F9}
+#buyers .s-label::before{background:linear-gradient(90deg,#67E8F9,#04E1CB)}
+#buyers .s-title{color:var(--white)}
+#buyers .s-title em{color:#04E1CB}
+#buyers .s-sub{color:rgba(255,255,255,.6)}
+.buyers-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+.b-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:32px 28px;
+  transition:background .2s,border-color .2s;
+}
+.b-card:hover{background:rgba(255,255,255,.09);border-color:rgba(8,145,178,.4)}
+.b-avatar{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Figtree',sans-serif;font-size:13px;font-weight:800;
+  margin-bottom:18px;
+}
+.b-role{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#67E8F9;margin-bottom:6px}
+.b-card h4{
+  font-family:'Figtree',sans-serif;
+  font-size:16px;font-weight:700;color:var(--white);margin-bottom:14px;
+}
+.b-quote{
+  font-size:13px;font-style:italic;
+  color:rgba(255,255,255,.55);line-height:1.7;
+  border-left:2px solid rgba(8,145,178,.5);padding-left:14px;margin-bottom:16px;
+}
+.b-win{
+  font-size:13px;color:#4ADE80;font-weight:600;line-height:1.6;
+  display:flex;align-items:flex-start;gap:7px;
+}
+.b-win::before{content:'↑';font-size:12px;margin-top:2px;flex-shrink:0}
+
+/* ── ROI ─────────────────────────────────────────────────────── */
+#roi{background:var(--bg)}
+.roi-stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+  gap:14px;margin-bottom:48px;
+}
+.roi-stat{
+  background:var(--white);border-radius:16px;padding:28px 20px;
+  text-align:center;border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  border-bottom:3px solid var(--cyan);
+}
+.roi-stat .num{
+  font-family:'Figtree',sans-serif;
+  font-size:38px;font-weight:800;color:var(--slate);
+  line-height:1;letter-spacing:-.5px;
+}
+.roi-stat .lbl{font-size:12px;font-weight:500;color:var(--muted);margin-top:8px}
+
+.roi-panel{
+  background:var(--white);border-radius:20px;padding:40px;
+  border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:24px;
+}
+.roi-panel h3{
+  font-family:'Figtree',sans-serif;
+  font-size:18px;font-weight:700;color:var(--slate);margin-bottom:6px;
+}
+.roi-note{font-size:12px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+.bar-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.bar-lbl{font-size:13px;font-weight:600;color:var(--slate);width:240px;flex-shrink:0}
+.bar-track{flex:1;background:var(--bg);border-radius:8px;height:32px;overflow:hidden;border:1px solid var(--border)}
+.bar-fill{height:100%;border-radius:7px;display:flex;align-items:center;padding:0 14px;font-size:12px;font-weight:700;color:var(--white)}
+.bar-fill.cyan{background:linear-gradient(90deg,var(--cyan-d),var(--cyan))}
+.bar-fill.green{background:linear-gradient(90deg,#047857,var(--green))}
+.bar-fill.orange{background:linear-gradient(90deg,#C2410C,var(--orange))}
+.bar-amt{font-size:13px;font-weight:700;color:var(--slate);width:72px;text-align:right;flex-shrink:0}
+
+.calc-box{
+  background:var(--white);border-radius:20px;padding:40px;
+  border:2px solid var(--cyan-l);
+  box-shadow:0 0 0 4px var(--cyan-xl);
+}
+.calc-head{
+  font-family:'Figtree',sans-serif;
+  font-size:22px;font-weight:800;color:var(--slate);margin-bottom:6px;
+}
+.calc-sub{font-size:14px;color:var(--muted);margin-bottom:32px}
+.calc-inputs{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:20px;margin-bottom:32px;
+}
+.cf label{
+  display:block;font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.8px;color:var(--slate);margin-bottom:8px;
+}
+.cf input{
+  width:100%;padding:12px 14px;
+  border:1.5px solid var(--border);border-radius:10px;
+  font-size:15px;font-weight:600;color:var(--slate);
+  background:var(--bg);outline:none;
+  font-family:'Inter',sans-serif;transition:border-color .15s,background .15s;
+}
+.cf input:focus{border-color:var(--cyan);background:var(--white);box-shadow:0 0 0 3px var(--cyan-xl)}
+.calc-results{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.cr-card{
+  background:var(--navy);border-radius:14px;padding:22px 18px;text-align:center;
+  border:1px solid rgba(255,255,255,.08);
+}
+.cr-card .rv{
+  font-family:'Figtree',sans-serif;
+  font-size:30px;font-weight:800;color:#04E1CB;letter-spacing:-.5px;
+}
+.cr-card .rl{font-size:11px;color:rgba(255,255,255,.5);margin-top:6px;font-weight:500}
+.forrester-fn{margin-top:24px;font-size:11px;color:var(--muted);line-height:1.7;font-style:italic}
+
+/* ── USE CASES ───────────────────────────────────────────────── */
+#usecases{background:var(--white)}
+.uc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.uc-card{
+  border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s;
+}
+.uc-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.uc-head{
+  padding:22px 26px 20px;
+  background:linear-gradient(135deg,var(--navy) 0%,#1e3a5f 100%);
+}
+.uc-num{font-size:10px;font-weight:800;letter-spacing:2px;color:rgba(103,232,249,.7);text-transform:uppercase;margin-bottom:6px}
+.uc-head h4{
+  font-family:'Figtree',sans-serif;
+  font-size:16px;font-weight:700;color:var(--white);
+}
+.uc-body{padding:22px 26px;background:var(--white)}
+.uc-before{
+  background:#FEF2F2;border-radius:10px;padding:14px 16px;
+  margin-bottom:10px;font-size:13px;color:#7F1D1D;line-height:1.7;
+  border-left:3px solid #FCA5A5;
+}
+.uc-before strong{display:block;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;color:#991B1B}
+.uc-after{
+  background:#F0FDF4;border-radius:10px;padding:14px 16px;
+  font-size:13px;color:#14532D;line-height:1.7;
+  border-left:3px solid #86EFAC;
+}
+.uc-after strong{display:block;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;color:#166534}
+.uc-metric{
+  display:flex;align-items:center;gap:8px;
+  margin-top:16px;font-size:13px;font-weight:700;color:var(--cyan-d);
+}
+.uc-metric::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--cyan);flex-shrink:0;
+}
+
+/* ── CLOSE PLAN ──────────────────────────────────────────────── */
+#closeplan{background:var(--bg)}
+.cp-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:860px){.cp-grid{grid-template-columns:1fr}}
+.panel{
+  background:var(--white);border-radius:20px;padding:36px;
+  box-shadow:var(--shadow);border:1px solid var(--border);
+}
+.panel-title{
+  font-family:'Figtree',sans-serif;
+  font-size:20px;font-weight:800;color:var(--slate);margin-bottom:6px;
+}
+.panel-sub{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6}
+
+/* readiness */
+.eq{margin-bottom:24px}
+.eq-label{
+  display:block;font-size:14px;font-weight:600;color:var(--slate);
+  margin-bottom:10px;line-height:1.5;
+}
+.eq-opts{display:flex;gap:8px;flex-wrap:wrap}
+.eq-btn{
+  padding:8px 16px;border-radius:24px;
+  border:1.5px solid var(--border);background:var(--bg);
+  color:var(--slate);font-size:13px;font-weight:600;
+  cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;
+}
+.eq-btn:hover{border-color:var(--cyan);color:var(--cyan);background:var(--cyan-xl)}
+.eq-btn.active{background:var(--cyan);color:var(--white);border-color:var(--cyan)}
+.score-wrap{margin:28px 0 10px}
+.score-header{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--slate);margin-bottom:8px}
+.score-track{background:var(--bg);border-radius:8px;height:10px;overflow:hidden;border:1px solid var(--border)}
+.score-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width .4s ease}
+.score-band{text-align:center;font-size:14px;font-weight:700;margin-top:16px;padding:14px 18px;border-radius:12px;line-height:1.4}
+.band-explore{background:#FEF2F2;color:#991B1B;border:1px solid #FECACA}
+.band-build{background:#FFFBEB;color:#92400E;border:1px solid #FDE68A}
+.band-accel{background:#F0FDF4;color:#166534;border:1px solid #86EFAC}
+
+/* close plan table */
+.ms-table{width:100%;border-collapse:collapse;font-size:13px}
+.ms-table th{
+  background:var(--bg);color:var(--slate);padding:10px 14px;
+  text-align:left;font-size:10px;font-weight:700;letter-spacing:.8px;
+  text-transform:uppercase;border-bottom:2px solid var(--border);
+}
+.ms-table td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--slate);vertical-align:middle}
+.ms-table tr:last-child td{border-bottom:none}
+.ms-table tr:hover td{background:var(--bg)}
+.ms-table input{
+  width:100%;border:none;background:transparent;
+  font-size:13px;color:var(--slate);font-family:'Inter',sans-serif;outline:none;
+}
+.ms-table input:focus{background:var(--cyan-xl);border-radius:4px;padding:2px 6px}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.dot-open{background:#CBD5E1}
+.copy-btn{
+  margin-top:22px;width:100%;
+  background:var(--cyan);color:var(--white);border:none;
+  padding:14px 24px;border-radius:28px;font-size:14px;font-weight:700;
+  cursor:pointer;transition:background .15s,transform .15s;
+  font-family:'Inter',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.copy-btn:hover{background:var(--cyan-d);transform:translateY(-1px)}
+
+/* ── CTA SECTION ─────────────────────────────────────────────── */
+#cta{
+  background:linear-gradient(135deg,var(--navy) 0%,#0F3460 100%);
+  padding:96px 40px;text-align:center;
+}
+#cta .s-label{color:#67E8F9;justify-content:center}
+#cta .s-label::before{background:linear-gradient(90deg,#67E8F9,#04E1CB)}
+#cta h2{
+  font-family:'Figtree',sans-serif;
+  font-size:clamp(32px,4vw,52px);font-weight:800;
+  color:var(--white);line-height:1.1;letter-spacing:-.3px;margin-bottom:18px;
+}
+#cta h2 em{font-style:normal;color:#04E1CB}
+#cta p{font-size:18px;color:rgba(255,255,255,.65);max-width:560px;margin:0 auto 40px;line-height:1.65}
+.cta-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+footer{background:var(--slate);padding:64px 40px 32px;color:rgba(255,255,255,.65)}
+.footer-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:40px;margin-bottom:48px;max-width:1200px;margin-left:auto;margin-right:auto;
+}
+.footer-col h4{
+  font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.9);margin-bottom:14px;
+}
+.footer-col p,.footer-col a{
+  font-size:14px;color:rgba(255,255,255,.5);line-height:1.9;text-decoration:none;display:block;
+}
+.footer-col a:hover{color:rgba(255,255,255,.9)}
+.footer-cta-link{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--cyan);color:var(--white);
+  font-size:14px;font-weight:700;padding:12px 24px;border-radius:24px;
+  text-decoration:none;margin-top:12px;transition:background .15s;
+}
+.footer-cta-link:hover{background:var(--cyan-d)}
+.footer-divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin:0 0 24px;max-width:1200px;margin-left:auto;margin-right:auto;margin-bottom:24px}
+.footer-bottom{
+  max-width:1200px;margin:0 auto;
+  display:flex;justify-content:space-between;flex-wrap:wrap;
+  gap:10px;font-size:11px;color:rgba(255,255,255,.3);
+}
+
+/* ── SCROLL ANIMATIONS ───────────────────────────────────────── */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+@media(prefers-reduced-motion:reduce){.fade-up{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#top" aria-label="Salesforce for Starkey – home">
+      <img src="sf-logo.png" alt="Salesforce" style="height:32px;width:auto">
+      <span style="width:1px;height:28px;background:rgba(0,0,0,.15);display:block;flex-shrink:0"></span>
+      <img src="starkey-logo.png" alt="Starkey" style="height:28px;width:auto">
+    </a>
+    <div class="nav-links" role="list">
+      <a href="#challenges" role="listitem">Challenges</a>
+      <a href="#solution" role="listitem">Solution</a>
+      <a href="#buyers" role="listitem">Buyers</a>
+      <a href="#roi" role="listitem">ROI</a>
+      <a href="#usecases" role="listitem">Use Cases</a>
+      <a href="#closeplan" role="listitem">Next Steps</a>
+    </div>
+    <a class="nav-cta" href="#closeplan">Schedule Discovery</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top" aria-label="Hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow" aria-hidden="true">
+      <span class="hero-eyebrow-dot"></span>
+      Prepared exclusively for Starkey Hearing Technologies
+    </div>
+    <h1>We Heard You.<br>Now Let's <em>Build</em><br>What's Next.</h1>
+    <p class="hero-sub">You told us your business deserves a better way to sell, serve, and grow. Here's how Salesforce B2B Commerce turns your five biggest challenges into your most powerful competitive advantages.</p>
+    <div class="hero-chips" role="list" aria-label="Key themes">
+      <span class="hero-chip" role="listitem">Self-Service Ordering</span>
+      <span class="hero-chip" role="listitem">Operational Efficiency</span>
+      <span class="hero-chip" role="listitem">Time to Market</span>
+      <span class="hero-chip" role="listitem">Selling Autonomously</span>
+      <span class="hero-chip" role="listitem">Revenue Per Account</span>
+    </div>
+    <div class="hero-btns">
+      <a href="#challenges" class="btn-hero-primary">
+        See How We Solve This
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#roi" class="btn-hero-outline">View ROI Analysis</a>
+    </div>
+    <div class="hero-trust" role="list" aria-label="Trust indicators">
+      <div class="hero-trust-item" role="listitem">
+        <svg class="hero-trust-icon" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 1L11.5 6.5L17.5 7.3L13.25 11.4L14.3 17.4L9 14.6L3.7 17.4L4.75 11.4L0.5 7.3L6.5 6.5L9 1Z" fill="rgba(8,145,178,.4)" stroke="rgba(8,145,178,.7)" stroke-width="1"/></svg>
+        289% 3-Year ROI
+      </div>
+      <div class="hero-trust-item" role="listitem">
+        <svg class="hero-trust-icon" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="1" y="1" width="16" height="16" rx="4" fill="rgba(5,150,105,.25)" stroke="rgba(5,150,105,.6)" stroke-width="1"/><path d="M5 9l3 3 5-5" stroke="rgba(5,150,105,.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Forrester TEI Validated
+      </div>
+      <div class="hero-trust-item" role="listitem">
+        <svg class="hero-trust-icon" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="7.5" fill="rgba(99,102,241,.2)" stroke="rgba(99,102,241,.5)" stroke-width="1"/><path d="M9 5v4l2.5 2.5" stroke="rgba(99,102,241,.9)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        &lt;6 Month Payback
+      </div>
+      <div class="hero-trust-item" role="listitem">
+        <svg class="hero-trust-icon" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M9 1.5L16 5.5V12.5L9 16.5L2 12.5V5.5L9 1.5Z" fill="rgba(234,88,12,.2)" stroke="rgba(234,88,12,.6)" stroke-width="1"/></svg>
+        Native Salesforce Platform
+      </div>
+    </div>
+  </div>
+  <div class="hero-right" aria-hidden="true">
+    <div class="hero-img"></div>
+    <div class="hero-img-overlay"></div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF BAND -->
+<div class="proof-band" role="region" aria-label="Key metrics">
+  <div class="proof-band-inner">
+    <span class="proof-label">Business Impact</span>
+    <div class="proof-stats">
+      <div class="proof-stat-item">
+        <span class="proof-stat-num">289%</span>
+        <div class="proof-stat-lbl">3-Year ROI</div>
+      </div>
+      <div class="proof-divider" aria-hidden="true"></div>
+      <div class="proof-stat-item">
+        <span class="proof-stat-num">$9.6M+</span>
+        <div class="proof-stat-lbl">Net Present Value</div>
+      </div>
+      <div class="proof-divider" aria-hidden="true"></div>
+      <div class="proof-stat-item">
+        <span class="proof-stat-num">18K hrs</span>
+        <div class="proof-stat-lbl">Automation Savings</div>
+      </div>
+      <div class="proof-divider" aria-hidden="true"></div>
+      <div class="proof-stat-item">
+        <span class="proof-stat-num">+25%</span>
+        <div class="proof-stat-lbl">Spend Per Account</div>
+      </div>
+      <div class="proof-divider" aria-hidden="true"></div>
+      <div class="proof-stat-item">
+        <span class="proof-stat-num">&lt;6mo</span>
+        <div class="proof-stat-lbl">Payback Period</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHALLENGES -->
+<section id="challenges" class="content" aria-labelledby="challenges-title">
+  <div class="wrap">
+    <div class="s-label">What We Heard From You</div>
+    <h2 class="s-title" id="challenges-title">Five Challenges.<br>One <em>Clear Path Forward.</em></h2>
+    <p class="s-sub">Every conversation with your team pointed to the same themes. Here's what we heard — and the growth potential sitting on the other side of each one.</p>
+    <div class="challenges-grid">
+      <div class="c-card cyan fade-up">
+        <div class="c-num">Challenge 01</div>
+        <h4>Self-Service Ordering</h4>
+        <p>Audiologists and clinics call or email reps to place routine reorders — consuming rep time that should be spent on value-added selling.</p>
+        <span class="c-impact cyan">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1v10M2 7l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Rep time wasted on low-value tasks
+        </span>
+      </div>
+      <div class="c-card green fade-up">
+        <div class="c-num">Challenge 02</div>
+        <h4>Operational Efficiency</h4>
+        <p>Manual order entry, returns, and warranty claims create bottlenecks across your ops team and slow response times to dispensing partners.</p>
+        <span class="c-impact green">18,000+ hours lost annually</span>
+      </div>
+      <div class="c-card orange fade-up">
+        <div class="c-num">Challenge 03</div>
+        <h4>Time to Market</h4>
+        <p>Launching new hearing aid models and pricing updates to 3,000+ dispensing partners takes weeks instead of days.</p>
+        <span class="c-impact orange">Competitive launch windows lost</span>
+      </div>
+      <div class="c-card indigo fade-up">
+        <div class="c-num">Challenge 04</div>
+        <h4>Selling Autonomously</h4>
+        <p>Reps can only grow revenue by adding headcount — there's no scalable digital channel enabling them to serve more accounts simultaneously.</p>
+        <span class="c-impact indigo">Revenue growth capped by headcount</span>
+      </div>
+      <div class="c-card violet fade-up">
+        <div class="c-num">Challenge 05</div>
+        <h4>Revenue Per Account</h4>
+        <p>Long-tail clinics and small practices are underserved — reps focus on top accounts, leaving incremental revenue untouched.</p>
+        <span class="c-impact violet">Long-tail accounts flat or churning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section id="solution" class="content" aria-labelledby="solution-title">
+  <div class="wrap">
+    <div class="s-label">Salesforce B2B Commerce</div>
+    <h2 class="s-title" id="solution-title">One Platform.<br><em>Five Solutions.</em></h2>
+    <p class="s-sub">Salesforce B2B Commerce is purpose-built for professional transactions at scale — digitizing your dispensing network while amplifying everything your team already does in Salesforce.</p>
+    <div class="sol-grid">
+      <div class="sol-card fade-up">
+        <div class="sol-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2" y="3" width="18" height="16" rx="3" stroke="#0891B2" stroke-width="1.5"/><path d="M7 8h8M7 11h5" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="sol-tag">Solves: Self-Service Ordering</div>
+        <h4>24/7 Digital Storefront for Clinics</h4>
+        <p>Every audiologist and clinic gets a personalized self-service portal — browse catalog, place orders, track shipments, and manage warranties without calling a rep.</p>
+        <span class="sol-badge">Commerce Cloud Storefront</span>
+      </div>
+      <div class="sol-card fade-up">
+        <div class="sol-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8.5" stroke="#0891B2" stroke-width="1.5"/><path d="M7 11l3 3 5-5" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="sol-tag">Solves: Operational Efficiency</div>
+        <h4>Automated Order &amp; Fulfillment Ops</h4>
+        <p>Eliminate manual order entry, automate returns and warranty claims, and reduce customer service load. Fulfillment moves 4x faster with streamlined digital workflows.</p>
+        <span class="sol-badge">Process Automation + AppExchange</span>
+      </div>
+      <div class="sol-card fade-up">
+        <div class="sol-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 16V9l7-6 7 6v7a2 2 0 01-2 2H6a2 2 0 01-2-2z" stroke="#0891B2" stroke-width="1.5"/><path d="M9 18v-5h4v5" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="sol-tag">Solves: Time to Market</div>
+        <h4>Instant Catalog &amp; Pricing Deployment</h4>
+        <p>Push new products, pricing updates, and promotional campaigns to your entire dispensing network in hours — not weeks. Low-code catalog management, no dev bottleneck.</p>
+        <span class="sol-badge">Commerce Catalog + Low-Code</span>
+      </div>
+      <div class="sol-card fade-up">
+        <div class="sol-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M11 2a9 9 0 100 18A9 9 0 0011 2z" stroke="#0891B2" stroke-width="1.5"/><path d="M8 11l2.5 2.5L15 8" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="sol-tag">Solves: Selling Autonomously</div>
+        <h4>Agentforce for Rep Productivity</h4>
+        <p>Reps shift from order-takers to strategic advisors. Agentforce surfaces next-best-action recommendations, upsell moments, and automates routine account outreach.</p>
+        <span class="sol-badge">Agentforce + Sales Cloud</span>
+      </div>
+      <div class="sol-card fade-up">
+        <div class="sol-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 17l5-5 4 4 7-8" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="sol-tag">Solves: Revenue Per Account</div>
+        <h4>Personalized Promotions at Scale</h4>
+        <p>AI-driven promotions and recommendations reach long-tail accounts reps can't service 1:1 — driving up to 25% more spend per account without adding headcount.</p>
+        <span class="sol-badge">Marketing Automation + AI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUYERS -->
+<section id="buyers" class="content" aria-labelledby="buyers-title">
+  <div class="wrap">
+    <div class="s-label">The B2B Commerce Buyer</div>
+    <h2 class="s-title" id="buyers-title">Who Owns This Decision<br>at <em>Starkey</em></h2>
+    <p class="s-sub">B2B Commerce is a cross-functional investment. Here's what each stakeholder needs to hear — and what success looks like for their role.</p>
+    <div class="buyers-grid">
+      <div class="b-card fade-up">
+        <div class="b-avatar" style="background:rgba(8,145,178,.15);color:#67E8F9">CRO</div>
+        <div class="b-role">CRO / VP Sales</div>
+        <h4>Revenue Growth &amp; Rep Productivity</h4>
+        <p class="b-quote">"How do we grow revenue without adding headcount — and make sure reps are spending time on what actually moves the needle?"</p>
+        <div class="b-win">289% ROI — Reps focus on consultative selling — Long-tail revenue unlocked at scale</div>
+      </div>
+      <div class="b-card fade-up">
+        <div class="b-avatar" style="background:rgba(251,191,36,.12);color:#FCD34D">CFO</div>
+        <div class="b-role">CFO / Finance</div>
+        <h4>Cost to Serve &amp; Business Case</h4>
+        <p class="b-quote">"What's the hard ROI? How quickly do we recover the investment, and what does this do to our cost per transaction?"</p>
+        <div class="b-win">&lt;6 month payback — $9.6M+ NPV — Lower cost of acquisition — Reduced ops headcount</div>
+      </div>
+      <div class="b-card fade-up">
+        <div class="b-avatar" style="background:rgba(5,150,105,.15);color:#6EE7B7">DIG</div>
+        <div class="b-role">VP eCommerce / Digital</div>
+        <h4>Platform Capability &amp; Speed</h4>
+        <p class="b-quote">"Can this integrate with our ERP and existing systems? How fast can we go live, and how do we build on it over time?"</p>
+        <div class="b-win">Native Salesforce platform — AppExchange ecosystem — &lt;5 months to go-live</div>
+      </div>
+      <div class="b-card fade-up">
+        <div class="b-avatar" style="background:rgba(167,139,250,.15);color:#C4B5FD">VP</div>
+        <div class="b-role">Sales Leaders / Regional VPs</div>
+        <h4>Field Efficiency &amp; Account Growth</h4>
+        <p class="b-quote">"How does this change my team's day-to-day? Will reps see this as a threat, or will it make their lives easier?"</p>
+        <div class="b-win">Reps become strategic advisors — +25% growth per account — Digital handles reorders</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI -->
+<section id="roi" class="content" aria-labelledby="roi-title">
+  <div class="wrap">
+    <div class="s-label">Business Value &amp; Forrester TEI</div>
+    <h2 class="s-title" id="roi-title">What Does This Return<br>for <em>Starkey?</em></h2>
+    <p class="s-sub">Based on the Forrester Total Economic Impact study of Salesforce B2B Commerce (April 2024), applied to a business of Starkey's scale. Customize the inputs below to build your own business case.</p>
+    <div class="roi-stats-grid">
+      <div class="roi-stat fade-up"><div class="num">289%</div><div class="lbl">3-Year ROI</div></div>
+      <div class="roi-stat fade-up"><div class="num">&lt;6mo</div><div class="lbl">Payback Period</div></div>
+      <div class="roi-stat fade-up"><div class="num">$9.6M+</div><div class="lbl">Net Present Value</div></div>
+      <div class="roi-stat fade-up"><div class="num">+25%</div><div class="lbl">Spend Per Account</div></div>
+      <div class="roi-stat fade-up"><div class="num">18K hrs</div><div class="lbl">Automation Savings</div></div>
+      <div class="roi-stat fade-up"><div class="num">+6pp</div><div class="lbl">Margin Improvement</div></div>
+    </div>
+    <div class="roi-panel fade-up">
+      <h3>3-Year Benefit Breakdown — Illustrative Model at Starkey Scale</h3>
+      <p class="roi-note">Forrester TEI composite ($1B revenue, 20% B2B channel) scaled to Starkey's estimated $850M. For discussion purposes only.</p>
+      <div class="bar-row">
+        <div class="bar-lbl">Increased Digital Sales Profitability</div>
+        <div class="bar-track"><div class="bar-fill cyan" style="width:69%">$7.6M</div></div>
+        <div class="bar-amt">$7.6M</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl">B2B Business Growth</div>
+        <div class="bar-track"><div class="bar-fill green" style="width:26%">$2.9M</div></div>
+        <div class="bar-amt">$2.9M</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-lbl">Process Automation Savings</div>
+        <div class="bar-track"><div class="bar-fill orange" style="width:5%"></div></div>
+        <div class="bar-amt">$570K</div>
+      </div>
+    </div>
+    <div class="calc-box fade-up" role="region" aria-label="ROI Calculator">
+      <div class="calc-head">Build Your Own Business Case</div>
+      <p class="calc-sub">Enter Starkey's actual numbers — all six ROI metrics update in real time using the Forrester TEI methodology.</p>
+      <div class="calc-inputs">
+        <div class="cf"><label for="c-rev">Total Annual Revenue ($M)</label><input type="number" id="c-rev" value="850" min="0" oninput="calcROI()" aria-describedby="rev-hint"></div>
+        <div class="cf"><label for="c-b2b">% Revenue from B2B Channel</label><input type="number" id="c-b2b" value="20" min="0" max="100" oninput="calcROI()"></div>
+        <div class="cf"><label for="c-accts">Number of B2B Accounts</label><input type="number" id="c-accts" value="3000" min="0" oninput="calcROI()"></div>
+        <div class="cf"><label for="c-spend">Avg Annual Spend Per Account ($K)</label><input type="number" id="c-spend" value="57" min="0" oninput="calcROI()"></div>
+        <div class="cf"><label for="c-margin">Current Gross Margin %</label><input type="number" id="c-margin" value="40" min="0" max="100" oninput="calcROI()"></div>
+        <div class="cf"><label for="c-reps">Number of Sales Reps</label><input type="number" id="c-reps" value="120" min="0" oninput="calcROI()"></div>
+      </div>
+      <div class="calc-results" role="list" aria-label="ROI results">
+        <div class="cr-card" role="listitem"><div class="rv" id="r-roi">289%</div><div class="rl">3-Year ROI</div></div>
+        <div class="cr-card" role="listitem"><div class="rv" id="r-npv">$9.6M</div><div class="rl">Net Present Value</div></div>
+        <div class="cr-card" role="listitem"><div class="rv" id="r-margin">$7.6M</div><div class="rl">Margin Benefit (3yr)</div></div>
+        <div class="cr-card" role="listitem"><div class="rv" id="r-growth">$2.9M</div><div class="rl">Growth Benefit (3yr)</div></div>
+        <div class="cr-card" role="listitem"><div class="rv" id="r-auto">$570K</div><div class="rl">Automation Savings</div></div>
+        <div class="cr-card" role="listitem"><div class="rv" id="r-payback">&lt;6mo</div><div class="rl">Payback Period</div></div>
+      </div>
+      <p class="forrester-fn">Based on Forrester Total Economic Impact of Salesforce B2B Commerce, April 2024 (commissioned by Salesforce). Results are illustrative and will vary by organization. Risk-adjusted at 10% discount rate. This analysis does not constitute a guarantee of results.</p>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="usecases" class="content" aria-labelledby="usecases-title">
+  <div class="wrap">
+    <div class="s-label">Starkey-Specific Use Cases</div>
+    <h2 class="s-title" id="usecases-title">How This Works<br>in <em>Your World</em></h2>
+    <p class="s-sub">Five use cases built specifically for Starkey's hearing industry distribution model and dispensing partner network.</p>
+    <div class="uc-grid">
+      <div class="uc-card fade-up">
+        <div class="uc-head"><div class="uc-num">Use Case 01</div><h4>Audiologist Self-Service Portal</h4></div>
+        <div class="uc-body">
+          <div class="uc-before"><strong>Before</strong>Clinics call or email reps to reorder devices, accessories, and batteries — hundreds of low-value touchpoints every week.</div>
+          <div class="uc-after"><strong>After</strong>Every dispensing partner gets a branded portal: browse catalog, reorder in seconds, track delivery, access training materials, and manage warranties independently.</div>
+          <div class="uc-metric">40% reduction in rep order-entry time — 24/7 ordering availability</div>
+        </div>
+      </div>
+      <div class="uc-card fade-up">
+        <div class="uc-head"><div class="uc-num">Use Case 02</div><h4>Rep-Assisted Ordering at Scale</h4></div>
+        <div class="uc-body">
+          <div class="uc-before"><strong>Before</strong>Reps manually enter orders for small practices, spending 30–60% of their time on admin instead of selling.</div>
+          <div class="uc-after"><strong>After</strong>Reps order on behalf of any account in Salesforce with AI-suggested bundles, upsell prompts, and full order history — in under 2 minutes.</div>
+          <div class="uc-metric">Reps serve 3x more accounts — 4x faster order fulfillment</div>
+        </div>
+      </div>
+      <div class="uc-card fade-up">
+        <div class="uc-head"><div class="uc-num">Use Case 03</div><h4>Long-Tail Account Activation</h4></div>
+        <div class="uc-body">
+          <div class="uc-before"><strong>Before</strong>Small clinics rarely hear from Starkey reps — their spend stays flat and many quietly migrate to competitors.</div>
+          <div class="uc-after"><strong>After</strong>AI-driven promotions and automated outreach keep every long-tail account engaged without rep intervention. Every account feels like a priority.</div>
+          <div class="uc-metric">Up to 25% increase in account spend — Long-tail retention improved</div>
+        </div>
+      </div>
+      <div class="uc-card fade-up">
+        <div class="uc-head"><div class="uc-num">Use Case 04</div><h4>New Product Launch Acceleration</h4></div>
+        <div class="uc-body">
+          <div class="uc-before"><strong>Before</strong>Launching a new hearing aid model to 3,000+ partners requires weeks of rep comms, manual price sheet updates, and inconsistent messaging.</div>
+          <div class="uc-after"><strong>After</strong>New SKUs, updated pricing, and launch promotions publish to the entire network simultaneously — banners, emails, and ordering activated in hours.</div>
+          <div class="uc-metric">Launch time from weeks to days — Consistent experience across all partners</div>
+        </div>
+      </div>
+      <div class="uc-card fade-up">
+        <div class="uc-head"><div class="uc-num">Use Case 05</div><h4>Account Growth via Personalization</h4></div>
+        <div class="uc-body">
+          <div class="uc-before"><strong>Before</strong>Reps rely on memory to find upsell opportunities — most cross-sell potential goes unnoticed for accounts that don't call in frequently.</div>
+          <div class="uc-after"><strong>After</strong>Agentforce surfaces the right product recommendation at the right time — accessories, batteries, service plans — automatically at every touchpoint.</div>
+          <div class="uc-metric">+15–25% avg order value — AI-driven next-best-action for every account</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSE PLAN -->
+<section id="closeplan" class="content" aria-labelledby="closeplan-title">
+  <div class="wrap">
+    <div class="s-label">Mutual Close Plan</div>
+    <h2 class="s-title" id="closeplan-title">Our Path Forward<br><em>Together</em></h2>
+    <p class="s-sub">Complete the readiness assessment together, then align on shared milestones. Designed to be filled out live in your discovery meeting.</p>
+    <div class="cp-grid">
+      <div class="panel fade-up">
+        <div class="panel-title">Readiness Self-Evaluation</div>
+        <p class="panel-sub">Score Starkey across 5 dimensions. Your readiness band updates as you answer.</p>
+        <div class="eq">
+          <label class="eq-label" id="q1-label">1. Digital commerce strategy — How defined is Starkey's digital-first go-to-market vision?</label>
+          <div class="eq-opts" role="group" aria-labelledby="q1-label">
+            <button class="eq-btn" onclick="setScore(this,'q1',1)" aria-pressed="false">1 — No strategy</button>
+            <button class="eq-btn" onclick="setScore(this,'q1',3)" aria-pressed="false">3 — In progress</button>
+            <button class="eq-btn" onclick="setScore(this,'q1',5)" aria-pressed="false">5 — Fully defined</button>
+          </div>
+        </div>
+        <div class="eq">
+          <label class="eq-label" id="q2-label">2. Data readiness — Is product, pricing, and account data clean and centralized?</label>
+          <div class="eq-opts" role="group" aria-labelledby="q2-label">
+            <button class="eq-btn" onclick="setScore(this,'q2',1)" aria-pressed="false">1 — Siloed/manual</button>
+            <button class="eq-btn" onclick="setScore(this,'q2',3)" aria-pressed="false">3 — Partially unified</button>
+            <button class="eq-btn" onclick="setScore(this,'q2',5)" aria-pressed="false">5 — Clean &amp; centralized</button>
+          </div>
+        </div>
+        <div class="eq">
+          <label class="eq-label" id="q3-label">3. Salesforce footprint — How embedded is Salesforce in Starkey today?</label>
+          <div class="eq-opts" role="group" aria-labelledby="q3-label">
+            <button class="eq-btn" onclick="setScore(this,'q3',1)" aria-pressed="false">1 — Not using SF</button>
+            <button class="eq-btn" onclick="setScore(this,'q3',3)" aria-pressed="false">3 — Sales/Service Cloud</button>
+            <button class="eq-btn" onclick="setScore(this,'q3',5)" aria-pressed="false">5 — Deep multi-cloud</button>
+          </div>
+        </div>
+        <div class="eq">
+          <label class="eq-label" id="q4-label">4. Executive sponsorship — Is there a C-level sponsor driving digital commerce?</label>
+          <div class="eq-opts" role="group" aria-labelledby="q4-label">
+            <button class="eq-btn" onclick="setScore(this,'q4',1)" aria-pressed="false">1 — No sponsor</button>
+            <button class="eq-btn" onclick="setScore(this,'q4',3)" aria-pressed="false">3 — Champion identified</button>
+            <button class="eq-btn" onclick="setScore(this,'q4',5)" aria-pressed="false">5 — C-level committed</button>
+          </div>
+        </div>
+        <div class="eq">
+          <label class="eq-label" id="q5-label">5. Partner readiness — How ready are dispensing partners to adopt self-service?</label>
+          <div class="eq-opts" role="group" aria-labelledby="q5-label">
+            <button class="eq-btn" onclick="setScore(this,'q5',1)" aria-pressed="false">1 — Not assessed</button>
+            <button class="eq-btn" onclick="setScore(this,'q5',3)" aria-pressed="false">3 — Early adopters ready</button>
+            <button class="eq-btn" onclick="setScore(this,'q5',5)" aria-pressed="false">5 — Network primed</button>
+          </div>
+        </div>
+        <div class="score-wrap" role="region" aria-live="polite" aria-label="Readiness score">
+          <div class="score-header">
+            <span>Readiness Score</span>
+            <span id="score-display">0 / 25</span>
+          </div>
+          <div class="score-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="25" aria-label="Readiness progress">
+            <div class="score-fill" id="score-fill" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="score-band band-explore" id="score-band" role="status">Select your answers above to see your readiness band.</div>
+      </div>
+      <div class="panel fade-up">
+        <div class="panel-title">Mutual Close Plan</div>
+        <p class="panel-sub">Fill in target dates and owners together. Click any cell to edit.</p>
+        <table class="ms-table" aria-label="Milestone close plan">
+          <thead>
+            <tr>
+              <th scope="col">Milestone</th>
+              <th scope="col">Owner</th>
+              <th scope="col">Target Date</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Executive alignment meeting</td><td><input placeholder="AE + Starkey CRO" aria-label="Owner for executive alignment meeting"></td><td><input type="date" aria-label="Target date for executive alignment meeting"></td><td><span class="dot dot-open" aria-hidden="true"></span>Open</td></tr>
+            <tr><td>Technical discovery (data, ERP, integrations)</td><td><input placeholder="SE + Starkey IT" aria-label="Owner for technical discovery"></td><td><input type="date" aria-label="Target date for technical discovery"></td><td><span class="dot dot-open" aria-hidden="true"></span>Open</td></tr>
+            <tr><td>B2B Commerce demo — audiologist portal</td><td><input placeholder="Salesforce AE" aria-label="Owner for B2B Commerce demo"></td><td><input type="date" aria-label="Target date for B2B Commerce demo"></td><td><span class="dot dot-open" aria-hidden="true"></span>Open</td></tr>
+            <tr><td>ROI / BVS workshop with CFO</td><td><input placeholder="AE + Starkey CFO" aria-label="Owner for ROI workshop"></td><td><input type="date" aria-label="Target date for ROI workshop"></td><td><span class="dot dot-open" aria-hidden="true"></span>Open</td></tr>
+            <tr><td>Proof of concept scope defined</td><td><input placeholder="Both teams" aria-label="Owner for PoC scope"></td><td><input type="date" aria-label="Target date for PoC scope"></td><td><span class="dot dot-open" aria-hidden="true"></span>Open</td></tr>
+            <tr><td>Commercial proposal delivered</td><td><input placeholder="Salesforce AE" aria-label="Owner for commercial proposal"></td><td><input type="date" aria-label="Target date for commercial proposal"></td><td><span class="dot dot-open" aria-hidden="true"></span>Open</td></tr>
+            <tr><td>Legal / procurement review</td><td><input placeholder="Starkey procurement" aria-label="Owner for legal review"></td><td><input type="date" aria-label="Target date for legal review"></td><td><span class="dot dot-open" aria-hidden="true"></span>Open</td></tr>
+            <tr><td>Contract signed / project kick-off</td><td><input placeholder="Both teams" aria-label="Owner for contract signing"></td><td><input type="date" aria-label="Target date for contract signing"></td><td><span class="dot dot-open" aria-hidden="true"></span>Open</td></tr>
+          </tbody>
+        </table>
+        <button class="copy-btn" onclick="copySummary()" aria-label="Copy close plan summary to clipboard">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1" y="4" width="10" height="11" rx="1.5" stroke="white" stroke-width="1.5"/><path d="M5 4V3a1 1 0 011-1h7a1 1 0 011 1v9a1 1 0 01-1 1h-1" stroke="white" stroke-width="1.5"/></svg>
+          Copy Summary to Clipboard
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta" aria-labelledby="cta-title">
+  <div class="s-label" style="justify-content:center">Ready to Move Forward?</div>
+  <h2 id="cta-title">Let's Build What's Next<br>for <em>Starkey</em></h2>
+  <p>Schedule a deeper discovery session with your full team and we'll map the exact path to deployment.</p>
+  <div class="cta-btns">
+    <a href="mailto:ae@salesforce.com" class="btn-hero-primary" style="font-size:16px;padding:16px 36px">
+      Schedule Discovery
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#roi" class="btn-hero-outline" style="font-size:16px;padding:16px 36px">Review ROI Model</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Ready to Move Forward?</h4>
+      <p>Let's schedule a deeper discovery session with your full team.</p>
+      <a href="mailto:ae@salesforce.com" class="footer-cta-link">
+        Schedule Discovery
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">Download Forrester TEI Report (PDF)</a>
+      <a href="https://www.salesforce.com/commerce/b2b-ecommerce/" target="_blank" rel="noopener">Salesforce B2B Commerce Product Page</a>
+      <a href="#">B2B Commerce Customer Stories</a>
+      <a href="#">ROI Calculator Guide</a>
+    </div>
+    <div class="footer-col">
+      <h4>Your Salesforce Team</h4>
+      <p>Account Executive</p>
+      <a href="mailto:ae@salesforce.com">ae@salesforce.com</a>
+      <p style="margin-top:10px">Solutions Engineer</p>
+      <a href="mailto:se@salesforce.com">se@salesforce.com</a>
+    </div>
+    <div class="footer-col">
+      <h4>About This Page</h4>
+      <p>Prepared exclusively for Starkey Hearing Technologies. Content is illustrative. ROI projections sourced from Forrester TEI commissioned by Salesforce, April 2024.</p>
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-bottom">
+    <div style="display:flex;align-items:center;gap:8px">
+      <img src="sf-logo.png" alt="Salesforce" style="height:18px;width:auto;opacity:.35">
+      <span>© 2025 Salesforce, Inc. All rights reserved.</span>
+    </div>
+    <span>Forrester TEI data used with permission. Results will vary by organization.</span>
+  </div>
+</footer>
+
+<script>
+/* ── ROI CALC ─────────────────────────────────────────────────── */
+function fmt(n){
+  if(n>=1e6)return'$'+(n/1e6).toFixed(1)+'M';
+  if(n>=1e3)return'$'+Math.round(n/1e3)+'K';
+  return'$'+Math.round(n);
+}
+function calcROI(){
+  const rev=(parseFloat(document.getElementById('c-rev').value)||850);
+  const b2bPct=(parseFloat(document.getElementById('c-b2b').value)||20)/100;
+  const accts=parseFloat(document.getElementById('c-accts').value)||3000;
+  const spend=(parseFloat(document.getElementById('c-spend').value)||57)*1000;
+  const margin=(parseFloat(document.getElementById('c-margin').value)||40)/100;
+  const scale=(rev*b2bPct)/(1000*0.20);
+  const marginBen=(accts*0.12*spend*1.05*0.05+accts*0.27*spend*1.10*0.055+accts*0.47*spend*1.15*0.06)*0.9;
+  const growthBen=(accts*0.12*spend*0.15*margin+accts*0.27*spend*0.20*margin+accts*0.47*spend*0.25*margin)*0.9;
+  const autoBen=18000*48*scale*0.95;
+  const totalBen=marginBen+growthBen+autoBen;
+  const subCosts=(350000+760000+1336000)*Math.max(0.5,scale)*1.05;
+  const implCosts=458330*Math.min(scale,1.5);
+  const opsCosts=(280000+321000+514000)*scale*1.1;
+  const totalCost=subCosts+implCosts+opsCosts;
+  const npv=totalBen*0.85-totalCost*0.95;
+  const roi=(totalBen-totalCost)/totalCost*100;
+  document.getElementById('r-roi').textContent=Math.round(roi)+'%';
+  document.getElementById('r-npv').textContent=fmt(npv);
+  document.getElementById('r-margin').textContent=fmt(marginBen);
+  document.getElementById('r-growth').textContent=fmt(growthBen);
+  document.getElementById('r-auto').textContent=fmt(autoBen);
+  document.getElementById('r-payback').textContent=totalCost/(totalBen/3)<1?'<12mo':'<6mo';
+}
+calcROI();
+
+/* ── READINESS SCORE ──────────────────────────────────────────── */
+const scores={};
+function setScore(btn,q,val){
+  scores[q]=val;
+  btn.closest('.eq-opts').querySelectorAll('.eq-btn').forEach(b=>{
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed','false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed','true');
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  const pct=total/25*100;
+  document.getElementById('score-fill').style.width=pct+'%';
+  document.getElementById('score-display').textContent=total+' / 25';
+  const track=document.querySelector('.score-track');
+  track.setAttribute('aria-valuenow',total);
+  const band=document.getElementById('score-band');
+  if(total<=10){
+    band.className='score-band band-explore';
+    band.textContent='Explore — Focus on strategy alignment and executive sponsorship before deployment.';
+  }else if(total<=18){
+    band.className='score-band band-build';
+    band.textContent='Build — Strong foundation. Ready to scope a pilot with 1-2 high-impact use cases.';
+  }else{
+    band.className='score-band band-accel';
+    band.textContent='Accelerate — Starkey is well-positioned for a full B2B Commerce deployment. Let\'s move.';
+  }
+}
+
+/* ── COPY SUMMARY ─────────────────────────────────────────────── */
+function copySummary(){
+  let text='STARKEY × SALESFORCE — MUTUAL CLOSE PLAN\n==========================================\n\n';
+  document.querySelectorAll('.ms-table tbody tr').forEach(row=>{
+    const cells=row.querySelectorAll('td');
+    text+=`• ${cells[0].textContent.trim()}\n  Owner: ${cells[1].querySelector('input').value||'—'}  |  Target: ${cells[2].querySelector('input').value||'—'}\n\n`;
+  });
+  text+='\nReadiness Score: '+document.getElementById('score-display').textContent;
+  text+='\n'+document.getElementById('score-band').textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=document.querySelector('.copy-btn');
+    const orig=btn.innerHTML;
+    btn.textContent='✓ Copied to clipboard';
+    setTimeout(()=>btn.innerHTML=orig,2500);
+  });
+}
+
+/* ── SCROLL FADE-IN ───────────────────────────────────────────── */
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
