@@ -517,6 +517,167 @@ section.content{padding:96px 40px}
 }
 .copy-btn:hover{background:var(--cyan-d);transform:translateY(-1px)}
 
+/* ── COST OF DOING NOTHING ───────────────────────────────────── */
+#codn{background:var(--navy);position:relative;overflow:hidden}
+#codn::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(220,38,38,.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+#codn .s-label{color:#FCA5A5}
+#codn .s-label::before{background:linear-gradient(90deg,#FCA5A5,#FB923C)}
+#codn .s-title{color:var(--white)}
+#codn .s-title em{color:#FCA5A5}
+#codn .s-sub{color:rgba(255,255,255,.6)}
+.codn-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+.codn-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:32px 28px;
+  position:relative;overflow:hidden;
+  transition:background .2s,border-color .2s;
+}
+.codn-card:hover{background:rgba(255,255,255,.07);border-color:rgba(252,165,165,.3)}
+.codn-card::before{
+  content:'';position:absolute;inset:0 0 auto 0;height:3px;border-radius:16px 16px 0 0;
+  background:linear-gradient(90deg,#DC2626,#EA580C);
+}
+.codn-warn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  color:#FCA5A5;margin-bottom:14px;
+}
+.codn-card h4{
+  font-family:'Figtree',sans-serif;
+  font-size:17px;font-weight:700;color:var(--white);margin-bottom:10px;
+}
+.codn-card p{font-size:14px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:18px}
+.codn-stat{
+  font-family:'Figtree',sans-serif;
+  font-size:28px;font-weight:800;color:#FCA5A5;line-height:1;
+  display:block;margin-bottom:4px;
+}
+.codn-stat-lbl{font-size:11px;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.3px}
+.codn-source{
+  margin-top:16px;font-size:10px;color:rgba(255,255,255,.25);
+  font-style:italic;border-top:1px solid rgba(255,255,255,.08);padding-top:12px;
+}
+
+/* ── INNOVATIONS ─────────────────────────────────────────────── */
+#innovations{background:var(--navy)}
+#innovations .s-label{color:#67E8F9}
+#innovations .s-label::before{background:linear-gradient(90deg,#67E8F9,#04E1CB)}
+#innovations .s-title{color:var(--white)}
+#innovations .s-title em{color:#04E1CB}
+#innovations .s-sub{color:rgba(255,255,255,.6)}
+.innov-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+}
+.innov-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:28px 24px;
+  transition:background .2s,border-color .2s;
+  position:relative;
+}
+.innov-card:hover{background:rgba(255,255,255,.09);border-color:rgba(8,145,178,.4)}
+.innov-new{
+  position:absolute;top:20px;right:20px;
+  font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  background:linear-gradient(135deg,var(--cyan),var(--green));
+  color:var(--white);padding:3px 9px;border-radius:12px;
+}
+.innov-icon{
+  width:40px;height:40px;border-radius:10px;
+  background:rgba(8,145,178,.15);border:1px solid rgba(8,145,178,.3);
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+}
+.innov-product{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#67E8F9;margin-bottom:8px}
+.innov-card h4{
+  font-family:'Figtree',sans-serif;
+  font-size:16px;font-weight:700;color:var(--white);margin-bottom:8px;
+}
+.innov-card p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.7}
+.innov-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:40px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08);
+}
+.innov-release{font-size:13px;color:rgba(255,255,255,.4)}
+.innov-link{
+  font-size:13px;font-weight:600;color:var(--cyan);text-decoration:none;
+  display:flex;align-items:center;gap:6px;transition:color .15s;
+}
+.innov-link:hover{color:#67E8F9}
+
+/* ── STORIES & RESOURCES ─────────────────────────────────────── */
+#stories{background:var(--bg)}
+.stories-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:24px;
+}
+.story-card{
+  background:var(--white);border-radius:16px;overflow:hidden;
+  border:1px solid var(--border);box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s;
+}
+.story-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.video-wrapper{
+  position:relative;width:100%;padding-top:56.25%;
+  background:var(--navy);
+}
+.video-wrapper iframe{
+  position:absolute;inset:0;width:100%;height:100%;border:none;
+}
+.story-body{padding:22px 24px}
+.story-tag{
+  font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:8px;
+}
+.story-card h4{
+  font-family:'Figtree',sans-serif;
+  font-size:16px;font-weight:700;color:var(--slate);margin-bottom:6px;
+}
+.story-card p{font-size:13px;color:var(--muted);line-height:1.65}
+.report-card{
+  background:var(--white);border-radius:16px;padding:32px 28px;
+  border:1px solid var(--border);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;
+  transition:transform .2s,box-shadow .2s;
+}
+.report-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.report-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:var(--cyan-xl);border:1px solid var(--cyan-l);
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+}
+.report-card h4{
+  font-family:'Figtree',sans-serif;
+  font-size:17px;font-weight:700;color:var(--slate);margin-bottom:8px;
+}
+.report-card p{font-size:13px;color:var(--muted);line-height:1.65;flex:1;margin-bottom:18px}
+.report-stats{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;
+}
+.report-stat-chip{
+  background:var(--bg);border:1px solid var(--border);
+  font-size:11px;font-weight:700;color:var(--slate);
+  padding:5px 12px;border-radius:20px;
+}
+.report-dl{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--cyan);color:var(--white);
+  font-size:13px;font-weight:700;padding:11px 20px;border-radius:24px;
+  text-decoration:none;width:fit-content;transition:background .15s;
+}
+.report-dl:hover{background:var(--cyan-d)}
+
 /* ── CTA SECTION ─────────────────────────────────────────────── */
 #cta{
   background:linear-gradient(135deg,var(--navy) 0%,#0F3460 100%);
@@ -573,7 +734,7 @@ footer{background:var(--slate);padding:64px 40px 32px;color:rgba(255,255,255,.65
 <nav role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
     <a class="nav-brand" href="#top" aria-label="Salesforce for Starkey – home">
-      <img src="sf-logo.png" alt="Salesforce" style="height:32px;width:auto">
+      <img src="sf-logo-official.svg" alt="Salesforce" style="height:36px;width:auto">
       <span style="width:1px;height:28px;background:rgba(0,0,0,.15);display:block;flex-shrink:0"></span>
       <img src="starkey-logo.png" alt="Starkey" style="height:28px;width:auto">
     </a>
@@ -1005,6 +1166,222 @@ footer{background:var(--slate);padding:64px 40px 32px;color:rgba(255,255,255,.65
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1" y="4" width="10" height="11" rx="1.5" stroke="white" stroke-width="1.5"/><path d="M5 4V3a1 1 0 011-1h7a1 1 0 011 1v9a1 1 0 01-1 1h-1" stroke="white" stroke-width="1.5"/></svg>
           Copy Summary to Clipboard
         </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COST OF DOING NOTHING -->
+<section id="codn" class="content" aria-labelledby="codn-title">
+  <div class="wrap">
+    <div class="s-label">The Cost of Standing Still</div>
+    <h2 class="s-title" id="codn-title">Every Quarter You Wait,<br>the <em>Gap Widens</em></h2>
+    <p class="s-sub">Here's what staying on legacy systems is costing Starkey right now — backed by Forrester research across 5 enterprise retailers.</p>
+    <div class="codn-grid">
+      <div class="codn-card fade-up">
+        <div class="codn-warn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1L11 10H1L6 1Z" stroke="#FCA5A5" stroke-width="1.2"/><path d="M6 5v2.5M6 8.8v.2" stroke="#FCA5A5" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Revenue at Risk
+        </div>
+        <h4>Lost Revenue from Poor Conversion</h4>
+        <p>Legacy portals convert 45% below Salesforce-powered benchmarks. Every month without a modern storefront is compounding revenue left on the table.</p>
+        <span class="codn-stat">–45%</span>
+        <span class="codn-stat-lbl">Conversion gap vs. Salesforce benchmarks</span>
+        <div class="codn-source">Forrester TEI: B2B Commerce, April 2024</div>
+      </div>
+      <div class="codn-card fade-up">
+        <div class="codn-warn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1L11 10H1L6 1Z" stroke="#FCA5A5" stroke-width="1.2"/><path d="M6 5v2.5M6 8.8v.2" stroke="#FCA5A5" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Operational Drag
+        </div>
+        <h4>18,000+ Hours Lost Annually</h4>
+        <p>Without self-service, reps and ops teams manually process routine reorders, warranty claims, and returns — time that compounds into real cost every year.</p>
+        <span class="codn-stat">18K hrs</span>
+        <span class="codn-stat-lbl">Estimated annual hours lost to manual processes</span>
+        <div class="codn-source">Forrester TEI: B2B Commerce, April 2024</div>
+      </div>
+      <div class="codn-card fade-up">
+        <div class="codn-warn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1L11 10H1L6 1Z" stroke="#FCA5A5" stroke-width="1.2"/><path d="M6 5v2.5M6 8.8v.2" stroke="#FCA5A5" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Team Capacity Trapped
+        </div>
+        <h4>Dev Teams Stuck in Maintenance Mode</h4>
+        <p>Highly customized legacy platforms require 2× the engineering time to maintain vs. innovate. Every sprint consumed by upkeep is a sprint not spent on growth.</p>
+        <span class="codn-stat">2×</span>
+        <span class="codn-stat-lbl">Longer on maintenance vs. new feature development</span>
+        <div class="codn-source">Forrester TEI: B2C Commerce + OMS, February 2026</div>
+      </div>
+      <div class="codn-card fade-up">
+        <div class="codn-warn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1L11 10H1L6 1Z" stroke="#FCA5A5" stroke-width="1.2"/><path d="M6 5v2.5M6 8.8v.2" stroke="#FCA5A5" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Competitive Exposure
+        </div>
+        <h4>Competitors Deploy in Days, Not Months</h4>
+        <p>While legacy platforms take months to launch a product update, competitors on modern platforms push changes in hours. The window to lead narrows every quarter.</p>
+        <span class="codn-stat">Days</span>
+        <span class="codn-stat-lbl">Time to launch on Salesforce vs. months on legacy</span>
+        <div class="codn-source">Forrester TEI: B2B Commerce, April 2024</div>
+      </div>
+      <div class="codn-card fade-up">
+        <div class="codn-warn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1L11 10H1L6 1Z" stroke="#FCA5A5" stroke-width="1.2"/><path d="M6 5v2.5M6 8.8v.2" stroke="#FCA5A5" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Silent Revenue Leak
+        </div>
+        <h4>Long-Tail Accounts Quietly Churning</h4>
+        <p>Small clinics that never hear from a rep don't complain — they just order from a competitor next time. Without digital engagement, long-tail churn is invisible until it's too late.</p>
+        <span class="codn-stat">+25%</span>
+        <span class="codn-stat-lbl">Spend per account unlocked with digital self-service</span>
+        <div class="codn-source">Forrester TEI: B2B Commerce, April 2024</div>
+      </div>
+      <div class="codn-card fade-up">
+        <div class="codn-warn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1L11 10H1L6 1Z" stroke="#FCA5A5" stroke-width="1.2"/><path d="M6 5v2.5M6 8.8v.2" stroke="#FCA5A5" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Hidden Cost
+        </div>
+        <h4>Keeping Legacy Systems Alive Isn't Free</h4>
+        <p>Between custom contractor rates, unstable integrations, and upgrade cycles, organizations pay $473K+ over 3 years just to keep the status quo — before factoring in lost revenue.</p>
+        <span class="codn-stat">$473K+</span>
+        <span class="codn-stat-lbl">3-year cost of maintaining legacy systems</span>
+        <div class="codn-source">Forrester TEI: B2C Commerce + OMS, February 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INNOVATIONS -->
+<section id="innovations" class="content" aria-labelledby="innovations-title">
+  <div class="wrap">
+    <div class="s-label">Agentforce Commerce · Spring 2026</div>
+    <h2 class="s-title" id="innovations-title">What's New:<br><em>Latest Innovations</em></h2>
+    <p class="s-sub">Salesforce Commerce is evolving fast. These are the Spring 2026 innovations most relevant to Starkey's digital distribution strategy.</p>
+    <div class="innov-grid">
+      <div class="innov-card fade-up">
+        <span class="innov-new">New</span>
+        <div class="innov-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2z" stroke="#0891B2" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="innov-product">Agentforce Commerce</div>
+        <h4>Guided Discovery</h4>
+        <p>AI generates discovery questions that adapt to each buyer's intent in real time — helping dispensing partners find the right hearing aid or accessory faster, without rep involvement.</p>
+      </div>
+      <div class="innov-card fade-up">
+        <span class="innov-new">New</span>
+        <div class="innov-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M10 3l7 7-7 7" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="innov-product">B2B Commerce</div>
+        <h4>Pricing Extensibility</h4>
+        <p>Custom field integration enables dynamic, account-specific pricing — so each dispensing partner sees their negotiated rates, volume tiers, and promotions automatically at checkout.</p>
+      </div>
+      <div class="innov-card fade-up">
+        <span class="innov-new">New</span>
+        <div class="innov-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="#0891B2" stroke-width="1.5"/><path d="M10 6.5v4l2.5 2" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="innov-product">Order Management</div>
+        <h4>Agentic Order Routing</h4>
+        <p>AI automatically resolves fulfillment exceptions — rerouting orders when inventory is low, a 3PL is delayed, or a clinic requests a different ship-to. No manual intervention required.</p>
+      </div>
+      <div class="innov-card fade-up">
+        <span class="innov-new">New</span>
+        <div class="innov-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 14V8a2 2 0 012-2h8a2 2 0 012 2v6" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round"/><path d="M2 14h16" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="innov-product">Agentforce Commerce</div>
+        <h4>Conversion Analytics</h4>
+        <p>Full-funnel ROI measurement for every agentic interaction — so Starkey can prove exactly which AI touchpoints are driving reorders, upsells, and new account activations.</p>
+      </div>
+      <div class="innov-card fade-up">
+        <span class="innov-new">New</span>
+        <div class="innov-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="10" rx="2" stroke="#0891B2" stroke-width="1.5"/><path d="M7 9h6M7 12h4" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="innov-product">Order Management</div>
+        <h4>Agentic Order Support</h4>
+        <p>Customers self-serve order status, cancellations, and returns across every channel — reducing inbound CS volume and freeing your team for high-value interactions.</p>
+      </div>
+      <div class="innov-card fade-up">
+        <span class="innov-new">New</span>
+        <div class="innov-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v14M3 10h14" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="innov-product">B2B Commerce</div>
+        <h4>Digital Subscription Bundles</h4>
+        <p>Bundle hearing aids, batteries, accessories, and service plans into recurring subscription offers — creating predictable revenue streams and stronger long-term account retention.</p>
+      </div>
+    </div>
+    <div class="innov-footer">
+      <span class="innov-release">Agentforce Commerce · Spring 2026 Release</span>
+      <a href="https://www.salesforce.com/commerce/innovations/" class="innov-link" target="_blank" rel="noopener">
+        See all innovations
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOMER STORIES -->
+<section id="stories" class="content" aria-labelledby="stories-title">
+  <div class="wrap">
+    <div class="s-label">See It Working</div>
+    <h2 class="s-title" id="stories-title">Companies Like Yours<br>Already <em>Made the Move</em></h2>
+    <p class="s-sub">Watch how iconic brands are using Salesforce Commerce and Agentforce to transform their digital experiences — then download the Forrester data behind the business case.</p>
+    <div class="stories-grid">
+      <div class="story-card fade-up">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/wjuee6Htq9Q" title="Pandora is Reimagining Digital Shopping with Agentforce" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="story-body">
+          <div class="story-tag">Agentforce Commerce · B2C</div>
+          <h4>Pandora Reimagines Digital Shopping with Agentforce</h4>
+          <p>See how Pandora is using Agentforce to create a 24/7 AI-powered shopping experience that scales globally without adding headcount.</p>
+        </div>
+      </div>
+      <div class="story-card fade-up">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/y2jyhwFd2VY" title="Siemens Launches AI and Ecommerce with Einstein 1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="story-body">
+          <div class="story-tag">Einstein 1 · B2B + Enterprise</div>
+          <h4>Siemens Launches AI and Ecommerce with Einstein 1</h4>
+          <p>A global manufacturing leader shows how a unified commerce and AI platform accelerates B2B digital transformation at enterprise scale.</p>
+        </div>
+      </div>
+      <div class="report-card fade-up">
+        <div class="report-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9l-6-6z" stroke="#0891B2" stroke-width="1.5"/><path d="M14 3v6h6M9 13h6M9 17h4" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="story-tag">Forrester Research · February 2026</div>
+        <h4>Total Economic Impact™ of Salesforce B2C Commerce &amp; Order Management</h4>
+        <p>Forrester interviewed five enterprise retailers to quantify the real-world ROI of Salesforce Commerce. Includes full benefit and cost model, composite methodology, and customer interviews.</p>
+        <div class="report-stats">
+          <span class="report-stat-chip">119% ROI</span>
+          <span class="report-stat-chip">$7.0M NPV</span>
+          <span class="report-stat-chip">7-mo Payback</span>
+          <span class="report-stat-chip">+45% Conversion</span>
+        </div>
+        <a href="Forrester_TEI_The_Total_Economic_Impact™_Of_Salesforce_B2C_Commerce_And_Order_Management.pdf" class="report-dl" download>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2v8M4 7l3 3 3-3M2 12h10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download Report (PDF)
+        </a>
+      </div>
+      <div class="report-card fade-up">
+        <div class="report-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M14 3H6a2 2 0 00-2 2v14a2 2 0 002 2h12a2 2 0 002-2V9l-6-6z" stroke="#0891B2" stroke-width="1.5"/><path d="M14 3v6h6M9 13h6M9 17h4" stroke="#0891B2" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="story-tag">Forrester Research · April 2024</div>
+        <h4>Total Economic Impact™ of Salesforce B2B Commerce</h4>
+        <p>Quantified analysis of B2B Commerce ROI across enterprise manufacturers and distributors — directly applicable to Starkey's dispensing partner model and dealer network.</p>
+        <div class="report-stats">
+          <span class="report-stat-chip">289% ROI</span>
+          <span class="report-stat-chip">$9.6M NPV</span>
+          <span class="report-stat-chip">&lt;6-mo Payback</span>
+          <span class="report-stat-chip">+25% Acct Spend</span>
+        </div>
+        <a href="https://www.salesforce.com/commerce/b2b-ecommerce/" class="report-dl" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M8 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Learn More
+        </a>
       </div>
     </div>
   </div>
